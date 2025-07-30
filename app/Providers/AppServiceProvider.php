@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Attendee;
 use App\Models\Event;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -35,8 +36,11 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define("create-event", function ($user, Event $event) {
-            echo "a";
             return $user !== null;
+        });
+
+        Gate::define("delete-attendee", function ($user, Event $event, Attendee $attendee) {
+            return $user->id === $event->user_id || $user->id === $attendee->user_id;
         });
     }
 }

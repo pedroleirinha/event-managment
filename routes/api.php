@@ -32,12 +32,12 @@ Route::apiResource('events', EventController::class)
 
 
 // // Protected routes
-// Route::apiResource('events.attendees', AttendeeController::class)
-//     ->scoped()
-//     ->only(['store', 'destroy'])
-//     ->middleware(['auth:sanctum', 'throttle:api']);
+Route::apiResource('events.attendees', AttendeeController::class)
+    ->scoped()
+    ->only(['store', 'destroy'])
+    ->middleware(['auth:sanctum', 'throttle:api']);
 
-// // Public routes
-// Route::apiResource('events.attendees', AttendeeController::class)
-//     ->scoped()
-//     ->only(['index', 'show']);
+// Public routes
+Route::apiResource('events.attendees', AttendeeController::class)
+    ->scoped()
+    ->only(['index', 'show']);

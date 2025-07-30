@@ -56,9 +56,12 @@ class AttendeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $event, Attendee $attendee)
+    public function destroy(Event $event, Attendee $attendee)
     {
-        Gate::authorize('delete', $attendee);
+        if (Gate::denies('delete-attendee', [$event, $attendee])) {
+            abort(403, "Denied!");
+        }
+
         $attendee->delete();
 
         return response()->json([

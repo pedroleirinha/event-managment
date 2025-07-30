@@ -70,7 +70,9 @@ class EventController extends Controller
     {
         if (Gate::denies('update-event', $event)) {
             abort(403, "you're not authorized");
+
         }
+
         $event->update(
             $request->validate([
                 'name' => 'sometimes|string|max:255',
