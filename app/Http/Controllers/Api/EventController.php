@@ -36,7 +36,9 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        Gate::authorize('create', Event::class);
+        if (Gate::denies('create-event')) {
+            abort(403, "you're not authorized");
+        }
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -66,7 +68,9 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        Gate::authorize('update', $event);
+        if (Gate::denies('update-event', $event)) {
+            abort(403, "you're not authorized");
+        }
         $event->update(
             $request->validate([
                 'name' => 'sometimes|string|max:255',
