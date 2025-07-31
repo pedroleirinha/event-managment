@@ -24,6 +24,7 @@ class EventController extends Controller
      */
     public function index()
     {
+        Gate::authorize("viewAny", Event::class);
         $query = $this->loadRelationships(Event::query(), $this->relations);
 
         return EventResource::collection(
@@ -70,7 +71,6 @@ class EventController extends Controller
     {
         if (Gate::denies('update-event', $event)) {
             abort(403, "you're not authorized");
-
         }
 
         $event->update(
